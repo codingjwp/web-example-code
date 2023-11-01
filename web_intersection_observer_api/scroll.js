@@ -63,7 +63,6 @@ const infinity = (entries, observer) => {
       showPost(_page, _limit);
     }
   });
-
 }
 
 const createObserver = () => {
@@ -78,5 +77,4 @@ const createObserver = () => {
 
 window.addEventListener('load', async () => {
   await showPost(_page, _limit);
-  // createObserver();
 })
