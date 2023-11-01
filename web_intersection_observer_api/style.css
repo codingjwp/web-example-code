@@ -1,0 +1,137 @@
+html {
+  font-size: 62.5%;
+}
+
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+}
+
+.header {
+  width: 100%;
+  height: 5rem;
+  text-align: center;
+}
+
+.header .title {
+  font-size: 2rem;
+}
+
+.main {
+  width: 100%;
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: calc(100% - 6rem);
+  margin: 1rem auto;
+}
+
+.group {
+  width: calc(100% - 6rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  justify-content: flex-start;
+  margin: 0 auto;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  border: 0.1rem solid #000000;
+  margin: 1rem;
+}
+
+.post span {
+  width: calc(100% - 1rem);
+  display: block;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.post pre {
+  display: inline-block;
+  width: calc(100% - 2rem);
+  white-space: pre-wrap;
+  margin: 1rem;
+}
+
+.post span,
+.post p,
+.post pre {
+  font-size: 1.4rem;
+}
+
+.post p {
+  width: 100%;
+  text-align: center;
+  font-weight: 600;
+}
+
+
+.loader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  opacity: 0;
+}
+
+.loader.show {
+  opacity: 1;
+}
+
+@keyframes topAndDown {
+  from {
+    transform: translateY(0%);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.loader div:nth-of-type(1),
+.loader div:nth-of-type(2),
+.loader div:nth-of-type(3) {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: #000000;
+  margin: 0 1rem;
+  will-change: transform;
+  animation-play-state: paused;
+}
+
+.loader.show div:nth-of-type(1),
+.loader.show div:nth-of-type(2),
+.loader.show div:nth-of-type(3) {
+  animation-play-state: running;
+}
+
+
+.loader.show div:nth-of-type(1) {
+  animation-iteration-count: infinite;
+  animation-name: topAndDown;
+  animation-duration: 1s;
+}
+
+.loader.show div:nth-of-type(2) {
+  animation-iteration-count: infinite;
+  animation-name: topAndDown;
+  animation-duration: 1s;
+  animation-delay: 250ms;
+
+}
+
+.loader.show div:nth-of-type(3) {
+  animation-iteration-count: infinite;
+  animation-name: topAndDown;
+  animation-duration: 1s;
+  animation-delay: 500ms;
+}
