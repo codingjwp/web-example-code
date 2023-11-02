@@ -1,4 +1,4 @@
-type ApiData = {
+export type ApiData = {
   albumId: number;
   id: number;
   title: string;

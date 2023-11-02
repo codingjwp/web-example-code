@@ -14,9 +14,8 @@ export default Card;
 const CardBox = styled.div<{$borderColor?: string}>`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  width: 100%;
   max-width: 60rem;
   margin: 1rem;
   border: ${props => `0.3rem solid ${props.$borderColor}`};
@@ -28,18 +27,30 @@ const CardFontSize = styled.p`
   padding: 1rem;
 `;
 
-Card.Title = styled(CardFontSize)`
+Card.Title = styled(CardFontSize)<{$minWidth: string, $maxWidth: string}>`
   font-weight: 600;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  height: 3.6rem;
+  margin: 1rem;
+  padding: 0;
+  text-overflow: ellipsis;
+  width: ${props => props.$minWidth};
+  max-width: ${props => props.$maxWidth};
 `
-Card.Context = styled(CardFontSize)`
+Card.Context = styled(CardFontSize)<{$minWidth: string, $maxWidth: string}>`
   text-align: center;
+  width: ${props => props.$minWidth};
+  max-width: ${props => props.$maxWidth};
 `
 Card.Img = styled.img.attrs<{$src: string, $alt: string}>(props => ({
   src: props.$src,
   alt: props.$alt,
-}))<{$minWidth: string, $minHeight: string, $maxWidth: string, $maxHeight: string}>`
-  min-width: ${props => props.$minWidth};
-  min-height: ${props => props.$minHeight};
+}))<{$width: string, $height: string, $maxWidth: string, $maxHeight: string}>`
+  width: ${props => props.$width};
+  height: ${props => props.$height};
   max-width: ${props => props.$maxWidth};
   max-height: ${props => props.$maxHeight};
 `;

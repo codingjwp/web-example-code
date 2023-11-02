@@ -1,36 +1,48 @@
 import styled from 'styled-components';
-import { getPhotoApi } from '../_apis/photoFetch';
 import Card from '../_components/Card';
 import BoundingBox from '../_components/BoundingBox';
+import { useIntersect } from '../_hooks/useIntersect';
+import { usePhotoFetch } from '../_hooks/usePhotoFetch';
+import { useState } from 'react';
 
-const PhotoGroup = async () => {
-  const data = await getPhotoApi('1', '20');
-
+const PhotoGroup = () => {
+  const cardAttribute = {
+    "$minWidth": '15rem',
+    "$maxWidth": '60rem',
+  }
+  const [page, setPage] = useState(1);
+  const [ photo, loading, end ] = usePhotoFetch(page);
+  const loader = useIntersect((entry, observer) => {
+    observer.unobserve(entry.target);
+    if (!loading && !end) {
+      console.log(end, loading);
+      setPage((prev) => prev + 1);
+    }
+  })
 
   return (
-    <MainGroup>{
-      data.map((item) => {
-        const haxColor = item.url.split('/');
-        return (
-          <Card>
-            <Card.Title>{item.title}</Card.Title>
-            <Card.Img $src={item.thumbnailUrl} $alt={haxColor[haxColor.length - 1]} $minHeight='16rem' $minWidth='16rem' $maxHeight='60rem' $maxWidth='60rem' />
-            <Card.Context>#{haxColor[haxColor.length - 1]}</Card.Context>
-          </Card>
-        )
-      })}
-      <BoundingBox />
+    <MainGroup>
+        {photo.map((item) => {
+          const haxColor = item.url.split('/');
+          return (
+            <Card key={`${item.id}`}>
+              <Card.Title {...cardAttribute}>{item.title}</Card.Title>
+              <Card.Img $src={item.thumbnailUrl} $alt={haxColor[haxColor.length - 1]} $width='15rem' $maxWidth='60rem' $height='15rem' $maxHeight='60rem'  />
+              <Card.Context {...cardAttribute}>#{haxColor[haxColor.length - 1]}</Card.Context>
+            </Card>
+          )
+        })}
+        <BoundingBox visible={loading} ref={loader} />
     </MainGroup>
   )
 }
 
 export default PhotoGroup;
 
-const MainGroup = styled.main`
-  width: 100%;
-  max-width: 120rem;
+const MainGroup = styled.div`
+  max-width: 144rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-`
+`;

@@ -1,8 +1,10 @@
-import Card from "./_components/Card";
+import PhotoGroup from "./_pages/PhotoGroup";
+
 
 function App() {
   return (
     <div className="App">
+      <PhotoGroup />
     </div>
   );
 }
