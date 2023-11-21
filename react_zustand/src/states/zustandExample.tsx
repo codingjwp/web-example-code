@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 type TodoState = {
   userId: number,
@@ -10,50 +11,54 @@ type TodoState = {
 
 interface ITodoStore {
   todos: TodoState[],
+  setTodos: (todos: TodoState[]) => void,
   actions: {
-    createTodos: () => Promise<void>,
-    addTodos: (todo: TodoState) => void,
     updateTodos: (id: number, todo: TodoState) => void,
-    delteTodos: (id: number) => void,
+    deleteTodos: (id: number) => void,
   }
 }
 
-const useStore = create<ITodoStore>()((set)=> ({
-  todos: [],
-  actions: {
-    createTodos: async () => {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/todos?userId=1');
-        const data = await response.json();
-        set({todos: data})
-      }catch(error: unknown) {
-        set({todos: []})
-      }
-    },
-    addTodos: (todo) => set((state) => ({ todos: [...state.todos, todo]})),
-    updateTodos: (id, todo) => set((state) => ({ todos: state.todos.map((prev) => {
-      if (prev.id === id) return todo
-      else return prev
-    })})),
-    delteTodos: (id) => set((state) => ({ todos: state.todos.filter((prev) => prev.id !== id)}))
+const useStore = create<ITodoStore>()(
+  persist(
+  (set)=> ({
+    todos: [],
+    setTodos: (todos: TodoState[]) => set({todos}),
+    actions: {
+      updateTodos: (id, todo) => set((state) => ({todos: state.todos.map((prev) => prev.id === id ? todo : prev)})),
+      deleteTodos: (id) => set((state) => ({ todos: state.todos.filter((prev) => prev.id !== id)}))
+    }
+  }),
+  { 
+    name: 'todos',
+    partialize: (state) => ({todos: state.todos})
   }
-}))
+))
+
 
 export const useTodoState = () => {
-  const todos = useStore((state) => state.todos);
-  const create = useStore((state) => state.actions.createTodos);
+  const {todos, setTodos} = useStore((state) => ({todos: state.todos, setTodos: state.setTodos}));
 
   useEffect(() => {
-    if (todos.length === 0) create();
+    const data = async () => {
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos?userId=1');
+        const data = (await response.json()) as TodoState[];
+        setTodos(data);
+      }catch(error: unknown) {
+        setTodos([]);
+      }
+    }
+    if (todos.length === 0){ 
+      data();
+    }
   }, [])
 
   return todos;
 }
 export const useTodoAction = () => {
-  const { addTodos, updateTodos, delteTodos } = useStore(state => state.actions);
+  const { updateTodos, deleteTodos } = useStore(state => state.actions);
   return { 
-    addTodos,
     updateTodos,
-    delteTodos
+    deleteTodos
   };
 }

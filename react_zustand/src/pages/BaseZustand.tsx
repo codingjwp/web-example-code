@@ -5,7 +5,7 @@ import { MouseEvent } from 'react';
 
 export default function BaseZustand() {
   const todos = useTodoState();
-  const {addTodos, updateTodos, delteTodos} = useTodoAction();
+  const {updateTodos, deleteTodos} = useTodoAction();
   const todoComponent = todos.length > 0 ? todos.map((todo) => {
     return (
     <div className={styles.todos} key={todo.id} onClick={handleTodoChange}>
@@ -28,7 +28,7 @@ export default function BaseZustand() {
       })
     }
     else if (tagName === 'BUTTON') {
-      delteTodos(id)
+      deleteTodos(id)
     }
     return ;
   }
