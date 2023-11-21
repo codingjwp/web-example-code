@@ -1,0 +1,10 @@
+.base {
+  padding: 10px;
+}
+
+.todos {
+  display: flex;
+  gap: 5px;
+  height: 20px;
+  margin-bottom: 3px;
+}
