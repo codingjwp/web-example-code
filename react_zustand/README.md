@@ -107,6 +107,52 @@ const useBearStore = create<BearState>()((set) => ({
 }))
 ```
 
+## 새로고침시 저장된 데이터를 보관하는 방법
+
+### 인터페이스
+
+```typescript
+import { useEffect } from 'react';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+type TodoState = {
+  userId: number,
+  id: number,
+  title: string,
+  completed: boolean,
+}
+
+interface ITodoStore {
+  todos: TodoState[],
+  setTodos: (todos: TodoState[]) => void,
+  actions: {
+    updateTodos: (id: number, todo: TodoState) => void,
+    deleteTodos: (id: number) => void,
+  }
+}
+```
+
+### zustand 코드
+
+```typescript
+const useStore = create<ITodoStore>()(
+  persist(
+  (set)=> ({
+    todos: [],
+    setTodos: (todos: TodoState[]) => set({todos}),
+    actions: {
+      updateTodos: (id, todo) => set((state) => ({todos: state.todos.map((prev) => prev.id === id ? todo : prev)})),
+      deleteTodos: (id) => set((state) => ({ todos: state.todos.filter((prev) => prev.id !== id)}))
+    }
+  }),
+  { 
+    name: 'todos',
+    partialize: (state) => ({todos: state.todos})
+  }
+))
+```
+
 
 # 프론트엔드 디자인 패턴
 
