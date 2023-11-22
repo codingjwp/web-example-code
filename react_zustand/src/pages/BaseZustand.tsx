@@ -1,5 +1,5 @@
 import styles from './baseZustand.module.css'
-import { useTodoState, useTodoAction } from '../states/zustandExample'
+import { useTodoState, useTodoAction } from '../states/todoStore'
 import { MouseEvent } from 'react';
 
 

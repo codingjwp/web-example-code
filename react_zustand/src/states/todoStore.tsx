@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 type TodoState = {
   userId: number,
@@ -39,18 +39,9 @@ export const useTodoState = () => {
   const {todos, setTodos} = useStore((state) => ({todos: state.todos, setTodos: state.setTodos}));
 
   useEffect(() => {
-    const data = async () => {
-      try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/todos?userId=1');
-        const data = (await response.json()) as TodoState[];
-        setTodos(data);
-      }catch(error: unknown) {
-        setTodos([]);
-      }
-    }
-    if (todos.length === 0){ 
-      data();
-    }
+    fetch('https://jsonplaceholder.typicode.com/todos?userId=1')
+      .then((res) => res.json())
+      .then((data: TodoState[]) => setTodos(data));
   }, [])
 
   return todos;
