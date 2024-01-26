@@ -8,3 +8,7 @@
 - **react_intersection_observer_api** : 무한스크롤을  `IntersectionObserver API`와 react를 사용하여 만든 연습 코드
 - **react-zustand** : zustand 상태관리 사용 예제
 - **responsive-web** : 반응형 웹페이지 만든 예제
+
+---
+
+- **01-starting-project** : react 기본 단계
