@@ -11,4 +11,4 @@
 
 ---
 
-- **01-starting-project** : react 기본 단계
+- **01-starting-project** : react 기본 단계 + 심화 단계
