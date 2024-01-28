@@ -12,3 +12,6 @@
 ---
 
 - **01-starting-project** : react 기본 단계 + 심화 단계
+- **01-tic-tac-toe-starting-project** : react 틱택톡 프로젝트 연습
+- **01-investment-results** : react 투자 결과 리스트 프로젝트 연습
+- **01-refs-portals-project** : react의 ref와 react-dom의 Portals 프로젝트 연습
