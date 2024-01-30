@@ -17,3 +17,4 @@
 - **01-refs-portals-project** : react의 ref와 react-dom의 Portals 프로젝트 연습
 - **01-project-management** : react + tailwind를 사용한 프로젝트 관리 앱
 - **01-context-reduce-project** : react context api및 useReduce 상태관리 연습
+- **01-sideeffect-project** : react side effect와 useEffect 연습
