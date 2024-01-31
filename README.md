@@ -16,6 +16,7 @@
 - **01-refs-portals-project** : react의 ref와 react-dom의 Portals 프로젝트 연습
 - **01-context-reduce-project** : react context api및 useReduce 상태관리 연습
 - **01-sideeffect-project** : react side effect와 useEffect 연습
+- **01-backend-fetch** : react http요청 fetch 연습
 
 ---
 
