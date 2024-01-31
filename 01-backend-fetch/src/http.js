@@ -1,17 +1,17 @@
-export async function featchAvailablePlaces() {
+export async function fetchAvailablePlaces() {
   const res = await fetch('http://localhost:3000/places')
   const placeData = await res.json();
   if (!res.ok) { // true일 경우 (200 300) false 일경우 400 500
-    throw new Error('Failed to featch places');
+    throw new Error('Failed to fetch places');
   }
   return placeData.places;
 }
 
-export async function featchUserPlaces() {
+export async function fetchUserPlaces() {
   const res = await fetch('http://localhost:3000/user-places')
   const placeData = await res.json();
   if (!res.ok) { // true일 경우 (200 300) false 일경우 400 500
-    throw new Error('Failed to featch user places');
+    throw new Error('Failed to fetch user places');
   }
   return placeData.places;
 }

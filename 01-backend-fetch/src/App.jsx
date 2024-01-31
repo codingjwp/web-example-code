@@ -1,37 +1,22 @@
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
 
 import Places from './components/Places.jsx';
 import Modal from './components/Modal.jsx';
+import Error from './components/Error.jsx';
 import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
-import { updateUserPlaces, featchUserPlaces } from './http.js';
+import { updateUserPlaces, fetchUserPlaces } from './http.js';
+import { useFetch } from './hooks/useFetch.jsx';
 
 function App() {
   const selectedPlace = useRef();
 
-  const [isFetching, setIsFetching] = useState(false);
-  const [userPlaces, setUserPlaces] = useState([]);
-  const [error, setError] = useState();
+  const { isFetching, error, fetchedData: userPlaces, setFetchedData: setUserPlaces } = useFetch(fetchUserPlaces, []);
 
-  const [errorUpdatingPlaces, setErrorUpdatingPlaces] = useState()
+  const [errorUpdatingPlaces, setErrorUpdatingPlaces] = useState();
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  useEffect(() => {
-    setIsFetching(true);
-    try {      
-      async function featchPlaces() {
-        const places = await featchUserPlaces();
-        setUserPlaces(places);
-      }
-    } catch(error) {
-      setError({message: error.message || 'Failed to fetch user places'});
-    } finally {
-      setIsFetching(false);
-    }
-    featchUserPlaces();
-  }, [])
 
   function handleStartRemovePlace(place) {
     setModalIsOpen(true);
@@ -54,7 +39,7 @@ function App() {
     });
     try {
       await updateUserPlaces([selectedPlace, ...userPlaces]);
-    }catch(error) {
+    } catch (error) {
       setUserPlaces(userPlaces);
       setErrorUpdatingPlaces({
         message: error.message || 'Fail to update places.'
@@ -68,7 +53,7 @@ function App() {
     );
     try {
       await updateUserPlaces(userPlaces.filter((place) => place.id === selectedPlace.current.id));
-    }catch(error) {
+    } catch (error) {
       setUserPlaces(userPlaces);
       setErrorUpdatingPlaces({
         message: error.message || 'Fail to delete places'
@@ -76,7 +61,7 @@ function App() {
     }
 
     setModalIsOpen(false);
-  }, [userPlaces]);
+  }, [userPlaces, setUserPlaces]);
 
   function handleError() {
     setErrorUpdatingPlaces(null);
@@ -85,14 +70,14 @@ function App() {
   return (
     <>
       <Modal open={errorUpdatingPlaces} onClose={handleError}>
-        {errorUpdatingPlaces && 
-          <Error title="An error occcurred!" 
-            message={errorUpdatingPlaces.message} 
+        {errorUpdatingPlaces &&
+          <Error title="An error occcurred!"
+            message={errorUpdatingPlaces.message}
             onConfirm={handleError} />
         }
       </Modal>
       <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
-        
+
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
