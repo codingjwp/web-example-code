@@ -87,7 +87,7 @@ function App() {
 
   const selectedProject = project.projects.find(item => item.id === project.selectedProjectId);
   const selectedTask = project.tasks.filter((item) => item.projectId === project.selectedProjectId) ?? [];
-  console.log("Test :", selectedTask)
+  
   let content = <SelectedProject
     project={selectedProject}
     onDelete={handleDeleteProject}

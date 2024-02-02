@@ -24,3 +24,4 @@
 - **02-tic-tac-toe-starting-project** : react 틱택톡 프로젝트 연습
 - **02-project-management** : react + tailwind를 사용한 프로젝트 관리 앱
 - **02-quiz-project** : react quiz 프로젝트 연습
+- **02-foods-order**: react 음식 주문 프로젝트
