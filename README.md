@@ -18,6 +18,8 @@
 - **01-sideeffect-project** : react side effect와 useEffect 연습
 - **01-backend-fetch** : react http요청 fetch 연습
 - **01-form-element** : react form 화면 연습
+- **01-base-redux** : redux 기초 과정
+- **01-redux-deepening** : redux 심화 과정(공부 더 필요)
 
 ---
 
@@ -25,3 +27,4 @@
 - **02-project-management** : react + tailwind를 사용한 프로젝트 관리 앱
 - **02-quiz-project** : react quiz 프로젝트 연습
 - **02-foods-order**: react 음식 주문 프로젝트
+- **02-adv-starting-project**: react router 연습
